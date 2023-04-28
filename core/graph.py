@@ -161,6 +161,27 @@ class Graph(BaseGraph):
         """
         
         return KatzScore.func(self, node1, node2, alpha, beta, max_length)
+    
+    @if_node_not_exist
+    def preferential_attachment(self, node1: nodeId, node2: nodeId) -> int:
+        """_summary_
+
+        Calculate the preferential attachment score between two nodes.
+
+        Parameters
+        ----------
+        node1 : nodeId
+            A node id of the first node.
+        node2 : nodeId
+            A node id of the second node.
+
+        Returns
+        -------
+        int
+            The preferential attachment score between two nodes.
+        """
+        
+        return self.get_neighbor_size(node1) * self.get_neighbor_size(node2)
 
 
 
