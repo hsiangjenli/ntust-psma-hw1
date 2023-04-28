@@ -39,7 +39,8 @@ class Graph(BaseGraph):
         
         return self.edges[node]
     
-    def get_node_size(self, node: nodeId):
+    @if_node_not_exist
+    def get_neighbor_size(self, node: nodeId) -> int:
         """_summary_
 
         Get the size of a node.
