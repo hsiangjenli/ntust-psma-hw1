@@ -141,6 +141,27 @@ class Graph(BaseGraph):
         
         return ShortestPath.func(self, node1, node2)
 
+    @if_node_not_exist
+    def katz_score(self, node1: nodeId, node2: nodeId, alpha: float=1.0, beta: float=1.0, max_length: int=100) -> float:
+        """_summary_
+
+        Calculate the Katz score between two nodes.
+
+        Parameters
+        ----------
+        node1 : nodeId
+            A node id of the first node.
+        node2 : nodeId
+            A node id of the second node.
+
+        Returns
+        -------
+        float
+            The Katz score between two nodes.
+        """
+        
+        return KatzScore.func(self, node1, node2, alpha, beta, max_length)
+
 
 
 

@@ -124,7 +124,7 @@ class ShortestPath:
 class KatzScore:
 
     @staticmethod
-    def func(self, node1: nodeId, node2: nodeId, alpha: float, beta: float=1, max_length: int=4):
+    def func(self, node1: nodeId, node2: nodeId, alpha: float=1.0, beta: float=1.0, max_length: int=1000):
         """_summary_
 
         Calculate the Katz score between two nodes.
@@ -157,10 +157,18 @@ class KatzScore:
         1. [Katz Centrality (Centrality Measure) - GeeksforGeeks](https://www.geeksforgeeks.org/katz-centrality-centrality-measure/)
         1. [katz和eigenvector 中心性](https://zhuanlan.zhihu.com/p/456679785)
         """
-        pass
+        katz_score = 0
+        
+        for l in range(1, max_length+1):
+            for path in KatzScore.get_all_possible_path(self, node1, l):
+                if node2 in path:
+                    katz_score += alpha ** l
+                    katz_score = katz_score*self.get_node_size(node2)
+        
+        return katz_score
     
     @staticmethod
-    def __get_all_possible_path(self, start: nodeId, max_length: int) -> list:
+    def get_all_possible_path(self, start: nodeId, max_length: int) -> list:
         """_summary_
 
         Get all possible path from start node to other nodes.
@@ -177,8 +185,21 @@ class KatzScore:
         list
             A list of all possible path.
         """
-        
-        yield None
+
+        visited = {start}
+        paths = [[start]]
+
+        while paths:
+            path = paths.pop(0) # 將最左邊的刪除
+            node = path[-1] # 取最後一個 node
+
+            if len(path) == max_length:
+                for neighbor in self.edges[node]:
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        new_path = path + [neighbor]
+                        paths.append(new_path)
+                        yield new_path
 
 class EigenvectorScore:
     
