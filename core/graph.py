@@ -162,7 +162,7 @@ class Graph(BaseGraph):
         
         return KatzScore.func(self, node1, node2, alpha, beta, max_length)
     
-    @if_node_not_exist
+    
     def preferential_attachment(self, node1: nodeId, node2: nodeId) -> int:
         """_summary_
 
@@ -180,10 +180,11 @@ class Graph(BaseGraph):
         int
             The preferential attachment score between two nodes.
         """
+        pa1 = self.get_neighbor_size(node1)
+        pa2 = self.get_neighbor_size(node2)
+
+        if pa1*pa2 == 0 and pa1+pa2 != 0:
+            return pa1+pa2
         
-        return self.get_neighbor_size(node1) * self.get_neighbor_size(node2)
-
-
-
-
-
+        else:
+            return pa1*pa2

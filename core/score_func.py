@@ -1,6 +1,6 @@
 from .base import BaseGraph, nodeId, graph
+from collections import deque
 import math
-import warnings
 
 class CommonNeighbors:
     
@@ -108,9 +108,11 @@ class ShortestPath:
         int
             The shortest path score between two nodes.
         """
+        # 重複出現的 
         if node1 == node2:
             return 0
         
+        # 從未出現過的新 node
         if node1 not in self.nodes or node2 not in self.nodes:
             return -1
         
@@ -120,6 +122,28 @@ class ShortestPath:
         """
         DFS 還沒寫完
         """
+        visited = set()
+        visited.add(node1)
+        queue = deque([(node1, 0)])
+
+        while queue:
+            node, depth = queue.popleft()
+
+            # 如果有在 snapshot 裡面，才繼續往下找
+            if node in self.nodes:
+                for neighbor in self.edges[node]:
+                    
+                    if neighbor == node2:
+                        return depth + 1
+                    
+                    for neighbor in self.edges[node]:
+                        if neighbor not in visited:
+                            visited.add(neighbor)
+                            queue.append((neighbor, depth + 1))
+
+        
+
+        
         
 class KatzScore:
 

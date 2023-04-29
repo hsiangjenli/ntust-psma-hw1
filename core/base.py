@@ -21,7 +21,8 @@ class BaseGraph:
             A list of node ids of the nodes.
         """
         
-        return list(self.edges.keys())
+        # return list(self.edges.keys())
+        return list(set(sum(self.edges.values(), [])) | set(self.edges.keys()))
 
     @property
     def average_degree(self):
