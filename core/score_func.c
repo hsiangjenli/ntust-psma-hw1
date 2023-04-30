@@ -1718,7 +1718,7 @@ static const char __pyx_k_union_size[] = "union_size";
 static const char __pyx_k_collections[] = "collections";
 static const char __pyx_k_ShortestPath[] = "ShortestPath";
 static const char __pyx_k_staticmethod[] = "staticmethod";
-static const char __pyx_k_get_node_size[] = "get_node_size";
+static const char __pyx_k_get_neighbors[] = "get_neighbors";
 static const char __pyx_k_score_func_py[] = "score_func.py";
 static const char __pyx_k_KatzScore_func[] = "KatzScore.func";
 static const char __pyx_k_does_not_exist[] = " does not exist.";
@@ -1729,6 +1729,7 @@ static const char __pyx_k_EigenvectorScore[] = "EigenvectorScore";
 static const char __pyx_k_ShortestPath_func[] = "ShortestPath.func";
 static const char __pyx_k_JaccardCoefficient[] = "JaccardCoefficient";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_get_neighbors_size[] = "get_neighbors_size";
 static const char __pyx_k_CommonNeighbors_func[] = "CommonNeighbors.func";
 static const char __pyx_k_EigenvectorScore_func[] = "EigenvectorScore.func";
 static const char __pyx_k_get_all_possible_path[] = "get_all_possible_path";
@@ -1771,7 +1772,8 @@ static PyObject *__pyx_n_u_float;
 static PyObject *__pyx_n_s_func;
 static PyObject *__pyx_kp_u_func_shortest_path_The_node;
 static PyObject *__pyx_n_s_get_all_possible_path;
-static PyObject *__pyx_n_s_get_node_size;
+static PyObject *__pyx_n_s_get_neighbors;
+static PyObject *__pyx_n_s_get_neighbors_size;
 static PyObject *__pyx_n_s_get_nodes;
 static PyObject *__pyx_n_s_graph;
 static PyObject *__pyx_n_s_import;
@@ -2360,7 +2362,8 @@ static PyObject *__pyx_pf_4core_10score_func_10AdamicAdar_func(CYTHON_UNUSED PyO
   int __pyx_t_4;
   PyObject *__pyx_t_5 = NULL;
   int __pyx_t_6;
-  Py_ssize_t __pyx_t_7;
+  int __pyx_t_7;
+  Py_ssize_t __pyx_t_8;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
@@ -2381,7 +2384,7 @@ static PyObject *__pyx_pf_4core_10score_func_10AdamicAdar_func(CYTHON_UNUSED PyO
  *         aa = 0
  *         cn = CommonNeighbors.func(self, node1, node2)             # <<<<<<<<<<<<<<
  * 
- *         if cn == 0:
+ *         if cn == 0 or cn == -1:
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_CommonNeighbors); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -2442,22 +2445,33 @@ static PyObject *__pyx_pf_4core_10score_func_10AdamicAdar_func(CYTHON_UNUSED PyO
   /* "core/score_func.py":79
  *         cn = CommonNeighbors.func(self, node1, node2)
  * 
- *         if cn == 0:             # <<<<<<<<<<<<<<
+ *         if cn == 0 or cn == -1:             # <<<<<<<<<<<<<<
  *             return 0
  * 
  */
   __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_v_cn, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (!__pyx_t_7) {
+  } else {
+    __pyx_t_6 = __pyx_t_7;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_1 = __Pyx_PyInt_EqObjC(__pyx_v_cn, __pyx_int_neg_1, -1L, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_7 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_7 < 0)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_6 = __pyx_t_7;
+  __pyx_L4_bool_binop_done:;
   if (__pyx_t_6) {
 
     /* "core/score_func.py":80
  * 
- *         if cn == 0:
+ *         if cn == 0 or cn == -1:
  *             return 0             # <<<<<<<<<<<<<<
  * 
- *         neighbors = list(set(self.edges[node1]) & set(self.edges[node2]))
+ *         neighbors = list(set(self.get_neighbors(node1)) & set(self.get_neighbors(node2)))
  */
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(__pyx_int_0);
@@ -2467,7 +2481,7 @@ static PyObject *__pyx_pf_4core_10score_func_10AdamicAdar_func(CYTHON_UNUSED PyO
     /* "core/score_func.py":79
  *         cn = CommonNeighbors.func(self, node1, node2)
  * 
- *         if cn == 0:             # <<<<<<<<<<<<<<
+ *         if cn == 0 or cn == -1:             # <<<<<<<<<<<<<<
  *             return 0
  * 
  */
@@ -2476,93 +2490,117 @@ static PyObject *__pyx_pf_4core_10score_func_10AdamicAdar_func(CYTHON_UNUSED PyO
   /* "core/score_func.py":82
  *             return 0
  * 
- *         neighbors = list(set(self.edges[node1]) & set(self.edges[node2]))             # <<<<<<<<<<<<<<
+ *         neighbors = list(set(self.get_neighbors(node1)) & set(self.get_neighbors(node2)))             # <<<<<<<<<<<<<<
  * 
  *         for neighbor in neighbors:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_edges); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_neighbors); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_v_node1) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_node1);
+  __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_t_1, __pyx_v_node1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = PySet_New(__pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PySet_New(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_edges); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyObject_GetItem(__pyx_t_3, __pyx_v_node2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_neighbors); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PySet_New(__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_5, function);
+    }
+  }
+  __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_2, __pyx_v_node2) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_node2);
+  __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_And(__pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_5 = PySet_New(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = PyNumber_And(__pyx_t_3, __pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PySequence_List(__pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_v_neighbors = ((PyObject*)__pyx_t_3);
-  __pyx_t_3 = 0;
+  __pyx_t_5 = PySequence_List(__pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_neighbors = ((PyObject*)__pyx_t_5);
+  __pyx_t_5 = 0;
 
   /* "core/score_func.py":84
- *         neighbors = list(set(self.edges[node1]) & set(self.edges[node2]))
+ *         neighbors = list(set(self.get_neighbors(node1)) & set(self.get_neighbors(node2)))
  * 
  *         for neighbor in neighbors:             # <<<<<<<<<<<<<<
- *             degree = self.get_node_size(neighbor)
+ *             degree = self.get_neighbors_size(neighbor)
  * 
  */
-  __pyx_t_3 = __pyx_v_neighbors; __Pyx_INCREF(__pyx_t_3); __pyx_t_7 = 0;
+  __pyx_t_5 = __pyx_v_neighbors; __Pyx_INCREF(__pyx_t_5); __pyx_t_8 = 0;
   for (;;) {
-    if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_3)) break;
+    if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_5)) break;
     #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-    __pyx_t_5 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_7); __Pyx_INCREF(__pyx_t_5); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_1 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_8); __Pyx_INCREF(__pyx_t_1); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
     #else
-    __pyx_t_5 = PySequence_ITEM(__pyx_t_3, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 84, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_1 = PySequence_ITEM(__pyx_t_5, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
     #endif
-    __Pyx_XDECREF_SET(__pyx_v_neighbor, __pyx_t_5);
-    __pyx_t_5 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_neighbor, __pyx_t_1);
+    __pyx_t_1 = 0;
 
     /* "core/score_func.py":85
  * 
  *         for neighbor in neighbors:
- *             degree = self.get_node_size(neighbor)             # <<<<<<<<<<<<<<
+ *             degree = self.get_neighbors_size(neighbor)             # <<<<<<<<<<<<<<
  * 
  *             if degree != 0:
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_node_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_neighbors_size); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_2 = NULL;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
-      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_1);
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
       if (likely(__pyx_t_2)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
         __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_1, function);
+        __Pyx_DECREF_SET(__pyx_t_3, function);
       }
     }
-    __pyx_t_5 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_2, __pyx_v_neighbor) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v_neighbor);
+    __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_v_neighbor) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_neighbor);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __Pyx_XDECREF_SET(__pyx_v_degree, __pyx_t_5);
-    __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_XDECREF_SET(__pyx_v_degree, __pyx_t_1);
+    __pyx_t_1 = 0;
 
     /* "core/score_func.py":87
- *             degree = self.get_node_size(neighbor)
+ *             degree = self.get_neighbors_size(neighbor)
  * 
  *             if degree != 0:             # <<<<<<<<<<<<<<
  *                 aa += 1 / math.log(degree)
  * 
  */
-    __pyx_t_5 = __Pyx_PyInt_NeObjC(__pyx_v_degree, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 87, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 87, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_1 = __Pyx_PyInt_NeObjC(__pyx_v_degree, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 87, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (__pyx_t_6) {
 
       /* "core/score_func.py":88
@@ -2572,37 +2610,37 @@ static PyObject *__pyx_pf_4core_10score_func_10AdamicAdar_func(CYTHON_UNUSED PyO
  * 
  *         return aa
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_math); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_1);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_log); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_math); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_log); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __pyx_t_1 = NULL;
+      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __pyx_t_3 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
-        __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_2);
-        if (likely(__pyx_t_1)) {
+        __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_2);
+        if (likely(__pyx_t_3)) {
           PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
-          __Pyx_INCREF(__pyx_t_1);
+          __Pyx_INCREF(__pyx_t_3);
           __Pyx_INCREF(function);
           __Pyx_DECREF_SET(__pyx_t_2, function);
         }
       }
-      __pyx_t_5 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_1, __pyx_v_degree) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_degree);
-      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 88, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_degree) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_degree);
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_int_1, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_InPlaceAdd(__pyx_v_aa, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 88, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      __pyx_t_1 = PyNumber_InPlaceAdd(__pyx_v_aa, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __Pyx_DECREF_SET(__pyx_v_aa, __pyx_t_5);
-      __pyx_t_5 = 0;
+      __Pyx_DECREF_SET(__pyx_v_aa, __pyx_t_1);
+      __pyx_t_1 = 0;
 
       /* "core/score_func.py":87
- *             degree = self.get_node_size(neighbor)
+ *             degree = self.get_neighbors_size(neighbor)
  * 
  *             if degree != 0:             # <<<<<<<<<<<<<<
  *                 aa += 1 / math.log(degree)
@@ -2611,14 +2649,14 @@ static PyObject *__pyx_pf_4core_10score_func_10AdamicAdar_func(CYTHON_UNUSED PyO
     }
 
     /* "core/score_func.py":84
- *         neighbors = list(set(self.edges[node1]) & set(self.edges[node2]))
+ *         neighbors = list(set(self.get_neighbors(node1)) & set(self.get_neighbors(node2)))
  * 
  *         for neighbor in neighbors:             # <<<<<<<<<<<<<<
- *             degree = self.get_node_size(neighbor)
+ *             degree = self.get_neighbors_size(neighbor)
  * 
  */
   }
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "core/score_func.py":90
  *                 aa += 1 / math.log(degree)
@@ -3869,7 +3907,7 @@ static PyObject *__pyx_pf_4core_10score_func_9KatzScore_func(CYTHON_UNUSED PyObj
  *             for path in KatzScore.get_all_possible_path(self, node1, l):
  *                 if node2 in path:             # <<<<<<<<<<<<<<
  *                     katz_score += alpha ** l
- *                     katz_score = katz_score*self.get_node_size(node2)
+ *                     katz_score = katz_score*self.get_neighbors_size(node2)
  */
       __pyx_t_11 = (__Pyx_PySequence_ContainsTF(__pyx_v_node2, __pyx_v_path, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 203, __pyx_L1_error)
       __pyx_t_12 = (__pyx_t_11 != 0);
@@ -3879,7 +3917,7 @@ static PyObject *__pyx_pf_4core_10score_func_9KatzScore_func(CYTHON_UNUSED PyObj
  *             for path in KatzScore.get_all_possible_path(self, node1, l):
  *                 if node2 in path:
  *                     katz_score += alpha ** l             # <<<<<<<<<<<<<<
- *                     katz_score = katz_score*self.get_node_size(node2)
+ *                     katz_score = katz_score*self.get_neighbors_size(node2)
  * 
  */
         __pyx_t_1 = PyFloat_FromDouble(__pyx_v_alpha); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 204, __pyx_L1_error)
@@ -3896,11 +3934,11 @@ static PyObject *__pyx_pf_4core_10score_func_9KatzScore_func(CYTHON_UNUSED PyObj
         /* "core/score_func.py":205
  *                 if node2 in path:
  *                     katz_score += alpha ** l
- *                     katz_score = katz_score*self.get_node_size(node2)             # <<<<<<<<<<<<<<
+ *                     katz_score = katz_score*self.get_neighbors_size(node2)             # <<<<<<<<<<<<<<
  * 
  *         return katz_score
  */
-        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_node_size); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 205, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_neighbors_size); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 205, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __pyx_t_5 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -3928,7 +3966,7 @@ static PyObject *__pyx_pf_4core_10score_func_9KatzScore_func(CYTHON_UNUSED PyObj
  *             for path in KatzScore.get_all_possible_path(self, node1, l):
  *                 if node2 in path:             # <<<<<<<<<<<<<<
  *                     katz_score += alpha ** l
- *                     katz_score = katz_score*self.get_node_size(node2)
+ *                     katz_score = katz_score*self.get_neighbors_size(node2)
  */
       }
 
@@ -3953,7 +3991,7 @@ static PyObject *__pyx_pf_4core_10score_func_9KatzScore_func(CYTHON_UNUSED PyObj
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "core/score_func.py":207
- *                     katz_score = katz_score*self.get_node_size(node2)
+ *                     katz_score = katz_score*self.get_neighbors_size(node2)
  * 
  *         return katz_score             # <<<<<<<<<<<<<<
  * 
@@ -4736,7 +4774,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_func, __pyx_k_func, sizeof(__pyx_k_func), 0, 0, 1, 1},
   {&__pyx_kp_u_func_shortest_path_The_node, __pyx_k_func_shortest_path_The_node, sizeof(__pyx_k_func_shortest_path_The_node), 0, 1, 0, 0},
   {&__pyx_n_s_get_all_possible_path, __pyx_k_get_all_possible_path, sizeof(__pyx_k_get_all_possible_path), 0, 0, 1, 1},
-  {&__pyx_n_s_get_node_size, __pyx_k_get_node_size, sizeof(__pyx_k_get_node_size), 0, 0, 1, 1},
+  {&__pyx_n_s_get_neighbors, __pyx_k_get_neighbors, sizeof(__pyx_k_get_neighbors), 0, 0, 1, 1},
+  {&__pyx_n_s_get_neighbors_size, __pyx_k_get_neighbors_size, sizeof(__pyx_k_get_neighbors_size), 0, 0, 1, 1},
   {&__pyx_n_s_get_nodes, __pyx_k_get_nodes, sizeof(__pyx_k_get_nodes), 0, 0, 1, 1},
   {&__pyx_n_s_graph, __pyx_k_graph, sizeof(__pyx_k_graph), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},

@@ -76,13 +76,13 @@ class AdamicAdar:
         aa = 0
         cn = CommonNeighbors.func(self, node1, node2)
         
-        if cn == 0:
+        if cn == 0 or cn == -1:
             return 0
         
-        neighbors = list(set(self.edges[node1]) & set(self.edges[node2]))
+        neighbors = list(set(self.get_neighbors(node1)) & set(self.get_neighbors(node2)))
 
         for neighbor in neighbors:            
-            degree = self.get_node_size(neighbor)
+            degree = self.get_neighbors_size(neighbor)
             
             if degree != 0:
                 aa += 1 / math.log(degree)
@@ -202,7 +202,7 @@ class KatzScore:
             for path in KatzScore.get_all_possible_path(self, node1, l):
                 if node2 in path:
                     katz_score += alpha ** l
-                    katz_score = katz_score*self.get_node_size(node2)
+                    katz_score = katz_score*self.get_neighbors_size(node2)
         
         return katz_score
     

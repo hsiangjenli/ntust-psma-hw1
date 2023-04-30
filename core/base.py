@@ -81,3 +81,27 @@ class BaseGraph:
             The size of the node.
         """
         return len(self.edges[node])
+    
+
+    def get_neighbors(self, node: nodeId) -> list:
+        """_summary_
+
+        Get all neighbors of a node.
+
+        Parameters
+        ----------
+        node : nodeId
+            A node id of the node.
+
+        Returns
+        -------
+        list
+            A list of node ids of the neighbors.
+        """
+        try:
+            neighbors = self.edges[node]
+        except Exception as e:
+            warnings.warn(f"func(get_neighbors): The node {e} does not exist.")
+            return []
+        
+        return neighbors
