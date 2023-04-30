@@ -1,5 +1,6 @@
 from .base import BaseGraph, nodeId, graph
 from collections import deque
+import warnings
 import math
 
 class CommonNeighbors:
@@ -91,7 +92,7 @@ class AdamicAdar:
 class ShortestPath:
 
     @staticmethod
-    def func(self, node1: nodeId, node2: nodeId) -> int:
+    def func(self, node1: nodeId, node2: nodeId, max_depth: int=6) -> int:
         """_summary_
         
         Calculate the shortest path score between two nodes.
@@ -113,7 +114,7 @@ class ShortestPath:
             return 0
         
         # 從未出現過的新 node
-        if node1 not in self.nodes or node2 not in self.nodes:
+        if node1 not in self.get_nodes or node2 not in self.get_nodes:
             return -1
         
         if node2 in self.edges[node1]:
@@ -127,19 +128,33 @@ class ShortestPath:
         queue = deque([(node1, 0)])
 
         while queue:
+
+
             node, depth = queue.popleft()
+            
+            if depth > max_depth:
+                depth = -1
 
             # 如果有在 snapshot 裡面，才繼續往下找
-            if node in self.nodes:
-                for neighbor in self.edges[node]:
-                    
-                    if neighbor == node2:
-                        return depth + 1
-                    
-                    for neighbor in self.edges[node]:
-                        if neighbor not in visited:
-                            visited.add(neighbor)
-                            queue.append((neighbor, depth + 1))
+            if node in self.get_nodes:
+
+                try:
+                    neighbors = self.edges[node]
+                    for neighbor in neighbors:
+        
+                        if neighbor == node2:
+                            return depth + 1
+                        
+                        for neighbor in self.edges[node]:
+                            if neighbor not in visited:
+                                visited.add(neighbor)
+                                queue.append((neighbor, depth + 1))
+                
+                except Exception as e:
+                    warnings.warn(f"func(shortest_path): The node {e} does not exist.")
+                    continue
+
+        return depth
 
         
 

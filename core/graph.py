@@ -3,61 +3,6 @@ from .score_func import *
 
 class Graph(BaseGraph):
     
-    def add_edge(self, node1: nodeId, node2: nodeId):
-        """_summary_
-
-        Create an edge between two nodes.
-
-        Parameters
-        ----------
-        node1 : nodeId
-            A node id of the first node.
-        node2 : nodeId
-            A node id of the second node.
-        """
-        
-        if node1 not in self.edges:
-            self.edges[node1] = []
-        
-        self.edges[node1].append(node2)
-    
-    def get_edges(self, node: nodeId):
-        """_summary_
-
-        Get all edges of a node.
-
-        Parameters
-        ----------
-        node : nodeId
-            A node id of the node.
-
-        Returns
-        -------
-        list
-            A list of node ids of the edges.
-        """
-        
-        return self.edges[node]
-    
-    @if_node_not_exist
-    def get_neighbor_size(self, node: nodeId) -> int:
-        """_summary_
-
-        Get the size of a node.
-
-        Parameters
-        ----------
-        node : nodeId
-            A node id of the node.
-
-        Returns
-        -------
-        int
-            The size of the node.
-        """
-        
-        return len(self.edges[node])
-
     @if_node_not_exist
     def common_neighbors(self, node1: nodeId, node2: nodeId) -> int:
         """_summary_
@@ -121,7 +66,8 @@ class Graph(BaseGraph):
         
         return AdamicAdar.func(self, node1, node2)
 
-    def shortest_path(self, node1: nodeId, node2: nodeId) -> int:
+    @if_node_not_exist
+    def shortest_path(self, node1: nodeId, node2: nodeId, max_depth: int=6) -> int:
         """_summary_
 
         Calculate the shortest path score between two nodes.
@@ -138,8 +84,7 @@ class Graph(BaseGraph):
         int
             The shortest path score between two nodes.
         """
-        
-        return ShortestPath.func(self, node1, node2)
+        return ShortestPath.func(self, node1, node2, max_depth)
 
     @if_node_not_exist
     def katz_score(self, node1: nodeId, node2: nodeId, alpha: float=1.0, beta: float=1.0, max_length: int=100) -> float:
@@ -159,7 +104,6 @@ class Graph(BaseGraph):
         float
             The Katz score between two nodes.
         """
-        
         return KatzScore.func(self, node1, node2, alpha, beta, max_length)
     
     
@@ -180,8 +124,8 @@ class Graph(BaseGraph):
         int
             The preferential attachment score between two nodes.
         """
-        pa1 = self.get_neighbor_size(node1)
-        pa2 = self.get_neighbor_size(node2)
+        pa1 = self.get_neighbors_size(node1)
+        pa2 = self.get_neighbors_size(node2)
 
         if pa1*pa2 == 0 and pa1+pa2 != 0:
             return pa1+pa2
