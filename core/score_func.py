@@ -1,4 +1,4 @@
-from .base import BaseGraph, nodeId, graph
+from core.base import nodeId
 from collections import deque
 import warnings
 import math
@@ -53,6 +53,7 @@ class JaccardCoefficient:
         
         return CommonNeighbors.func(self, node1, node2) / union_size
 
+
 class AdamicAdar:
     
     @staticmethod
@@ -88,6 +89,7 @@ class AdamicAdar:
                 aa += 1 / math.log(degree)
         
         return aa
+
 
 class ShortestPath:
 
@@ -156,10 +158,7 @@ class ShortestPath:
 
         return depth
 
-        
 
-        
-        
 class KatzScore:
 
     @staticmethod
@@ -233,12 +232,15 @@ class KatzScore:
             node = path[-1] # 取最後一個 node
 
             if len(path) == max_length:
+                
                 for neighbor in self.edges[node]:
+                    
                     if neighbor not in visited:
                         visited.add(neighbor)
                         new_path = path + [neighbor]
                         paths.append(new_path)
                         yield new_path
+
 
 class EigenvectorScore:
     

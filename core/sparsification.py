@@ -1,40 +1,48 @@
 from .base import graph
+import pandas as pd
+import numpy as np
 
 class DegreeBased:
 
-    @staticmethod
-    def sparsify(graph: graph, threshold: float) -> graph:
-        """_summary_
+    def __init__(self, 
+                 graph: dict, 
+                 train: pd.DataFrame, 
+                 test: pd.DataFrame, 
+                 x_col: list, y_col: str, 
+                 models: list,
+                 **index
+        ):
 
-        Sparsify the graph based on the degree of the nodes.
+        self.graph = graph
+        self.index = index
 
-        Parameters
-        ----------
-        graph : graph
-            A graph.
-        threshold : float
-            The threshold of the sparsification.
+        self.train = train
+        self.test = test
 
-        Returns
-        -------
-        graph
-            The sparsified graph.
-        """
-        sparsified_graph = {}
-        sparsified_nodes = {}
-        
-        for node in graph.get_nodes:
-            if graph.get_neighbors_size(node) >= threshold:
-                sparsified_nodes[node] = graph.get_neighbors(node)
-        
-        # 與 node1 的交集
-        sparsified_node1 = list(set(graph.keys() & sparsified_nodes.keys()))
+        self.x_col = x_col
+        self.y_col = y_col
 
-        # 所有 sparsified_nodes
-        sparsified_nodes = set(sparsified_nodes.keys() | sparsified_nodes.values())
-        
-        for node in sparsified_node1:
-            sparsified_graph[node] = 1
+        self.models = models
+    
+    # @property
+    # def model(self):
+    #     return self.__model
+    
+    def __sparsify(self, group_name: str, index):
+        # print(index.format(*'train'))
+        group_name = f'{group_name}_{self.model.__class__.__name__}'
+        index_train = self.train.loc[eval(index.format(*['train' for e in range(10)]))].index.tolist()
+        index_test = self.test.loc[eval(index.format(*['test' for e in range(10)]))].index.tolist()
+        # train.loc[train['label'] > 0].index.tolist()
+        train, model, x_col, y_col = self.train.loc[index_train], self.model, self.x_col, self.y_col
+        print(train.label.value_counts())
 
-        
-        return sparsified_graph
+        model.fit(train[x_col], train[y_col])
+        self.train[group_name], self.test[group_name] = np.full(len(self.train), -1), np.full(len(self.test), -1)
+        self.train.loc[index_train, group_name] = model.predict(self.train.loc[index_train][x_col])
+        self.test.loc[index_test, group_name] = model.predict(self.test.loc[index_test][x_col])
+
+    def fit(self):
+        for self.model in self.models:
+            for group_name, index in self.index.items():
+                self.__sparsify(group_name, index)
