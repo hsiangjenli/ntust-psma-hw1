@@ -1,4 +1,4 @@
-from core.base import nodeId
+from .base import nodeId
 from collections import deque
 import warnings
 import math

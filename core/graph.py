@@ -1,5 +1,5 @@
-from core.base import BaseGraph, if_node_not_exist
-from core.score_func import *
+from .base import BaseGraph, if_node_not_exist
+from .score_func import *
 
 class Graph(BaseGraph):
     

@@ -1,4 +1,4 @@
-from core.base import graph
+from .base import graph
 import pandas as pd
 import numpy as np
 
