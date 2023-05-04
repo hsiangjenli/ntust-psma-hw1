@@ -23,6 +23,10 @@ class CommonNeighbors:
         int
             The common neighbors score between two nodes.
         """
+        if node1 == node2:
+            warnings.warn("func(common_neighbors): The two nodes are the same.")
+            return -2
+        
         return len(list(set(self.edges[node1]) & set(self.edges[node2])))
         
 
