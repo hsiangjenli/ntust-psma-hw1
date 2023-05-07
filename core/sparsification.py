@@ -50,10 +50,6 @@ class DegreeBased:
 
 class RandomWalk:
     
-    def __init__(self, graph: dict, dropout: float=0.1) -> None:
-        self.graph = graph
-        self.dropout = dropout
-    
     @staticmethod
     def fit(graph: dict, node1_dropout: float=0.1, neighbor_dropout: float=0.1) -> dict:
         
