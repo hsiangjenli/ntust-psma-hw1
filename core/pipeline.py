@@ -49,8 +49,8 @@ class ScoreFuncPipeline:
         list[pd.DataFrame]
             return a list of transformed dataframe.
         """
-        kwargs = {"graph": graph}
-        kwargs.update(**kwargs)
+
+        kwargs.update({"graph": graph})
 
         transformed_dfs = []
         
