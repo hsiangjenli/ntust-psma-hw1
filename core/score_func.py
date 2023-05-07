@@ -7,7 +7,7 @@ class CommonNeighbors:
     
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId) -> int:
-        """_summary_
+        """
         
         Calculate the common neighbors score between two nodes.
         
@@ -34,7 +34,7 @@ class JaccardCoefficient:
 
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId) -> float:
-        """_summary_
+        """
         
         Calculate the Jaccard coefficient score between two nodes.
         
@@ -62,7 +62,7 @@ class AdamicAdar:
     
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId) -> float:
-        """_summary_
+        """
         
         Calculate the Adamic-Adar score between two nodes.
         
@@ -99,7 +99,7 @@ class ShortestPath:
 
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId, max_depth: int=6) -> int:
-        """_summary_
+        """
         
         Calculate the shortest path score between two nodes.
         
@@ -167,7 +167,7 @@ class KatzScore:
 
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId, alpha: float=1.0, beta: float=1.0, max_length: int=1000):
-        """_summary_
+        """
 
         Calculate the Katz score between two nodes.
         
@@ -211,7 +211,7 @@ class KatzScore:
     
     @staticmethod
     def get_all_possible_path(self, start: nodeId, max_length: int) -> list:
-        """_summary_
+        """
 
         Get all possible path from start node to other nodes.
 
