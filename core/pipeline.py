@@ -31,7 +31,7 @@ class ScoreFuncPipeline:
         """
         self.score_func = socre_func
     
-    def transform(self, graph: dict, **kwargs) -> list[pd.DataFrame]:
+    def transform(self, graph: dict, **kwargs) -> list:
         """
 
         Parameters
