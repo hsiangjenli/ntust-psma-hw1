@@ -22,7 +22,7 @@ class BaseGraph:
         self.edges = {}
 
     def add_edge(self, node1: nodeId, node2: nodeId):
-        """_summary_
+        """
 
         Create an edge between two nodes.
 
@@ -40,7 +40,7 @@ class BaseGraph:
     
     @property
     def get_nodes(self) -> list:
-        """_summary_
+        """
 
         Get all nodes of the graph.
 
@@ -53,7 +53,7 @@ class BaseGraph:
 
     @property
     def get_average_degree(self):
-        """_summary_
+        """
 
         Get the average degree of the graph.
 
@@ -66,7 +66,7 @@ class BaseGraph:
     
     @if_node_not_exist
     def get_neighbors_size(self, node: nodeId) -> int:
-        """_summary_
+        """
 
         Get the size of a node.
 
@@ -84,7 +84,7 @@ class BaseGraph:
     
 
     def get_neighbors(self, node: nodeId) -> list:
-        """_summary_
+        """
 
         Get all neighbors of a node.
 
