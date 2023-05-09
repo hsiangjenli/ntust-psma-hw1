@@ -3,6 +3,10 @@ import pandas as pd
 class ScoreFuncPipeline:
     def __init__(self, **socre_func: dict) -> None:
         """
+        **Score Function Pipeline**
+        ---------------------------
+
+        > A pipeline for calculating the score of the graph
 
         Parameters
         ----------

@@ -4,12 +4,15 @@ import warnings
 import math
 
 class CommonNeighbors:
-    
+    """
+    **Common neighbors**
+    --------------------
+    """
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId) -> int:
         """
-        
-        Calculate the common neighbors score between two nodes.
+
+        > Calculate the common neighbors score between two nodes.
         
         Parameters
         ----------
@@ -31,12 +34,15 @@ class CommonNeighbors:
         
 
 class JaccardCoefficient:
-
+    """
+    **Jaccard coefficient**
+    -----------------------
+    """
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId) -> float:
         """
-        
-        Calculate the Jaccard coefficient score between two nodes.
+
+        > Calculate the Jaccard coefficient score between two nodes.
         
         Parameters
         ----------
@@ -59,12 +65,16 @@ class JaccardCoefficient:
 
 
 class AdamicAdar:
+    """
+    **Adamic-Adar**
+    ---------------
+    """
     
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId) -> float:
         """
         
-        Calculate the Adamic-Adar score between two nodes.
+        > Calculate the Adamic-Adar score between two nodes.
         
         Parameters
         ----------
@@ -96,12 +106,15 @@ class AdamicAdar:
 
 
 class ShortestPath:
+    """
+    **Shortest path**
+    -----------------
+    """
 
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId, max_depth: int=6) -> int:
-        """
-        
-        Calculate the shortest path score between two nodes.
+        """       
+        > Calculate the shortest path score between two nodes.
         
         Parameters
         ----------
@@ -164,15 +177,17 @@ class ShortestPath:
 
 
 class KatzScore:
+    """
+    **Katz score**
+    --------------
+    """
 
     @staticmethod
     def func(self, node1: nodeId, node2: nodeId, alpha: float=1.0, beta: float=1.0, max_length: int=1000):
         """
 
-        Calculate the Katz score between two nodes.
+        > Calculate the Katz score between two nodes.
         
-        Katz score
-        ----------
         1. Measure the relative degree of influence of an actor (or node) within a social network
         1. Measures influence by taking into account the **total number of walks between a pair of actors**
 
@@ -246,8 +261,8 @@ class KatzScore:
                         yield new_path
 
 
-class EigenvectorScore:
+# class EigenvectorScore:
     
-    @staticmethod
-    def func(self, node: nodeId) -> float:
-        pass
+#     @staticmethod
+#     def func(self, node: nodeId) -> float:
+#         pass

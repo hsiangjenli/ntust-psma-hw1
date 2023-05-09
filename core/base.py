@@ -5,6 +5,9 @@ nodeId = NewType('nodeId', int)
 graph = NewType('graph', dict)
 
 def if_node_not_exist(func):
+    """
+    > Error handling for the node does not exist.
+    """
     
     def wrapper(*args, **kwargs):
         try:
@@ -23,8 +26,10 @@ class BaseGraph:
 
     def add_edge(self, node1: nodeId, node2: nodeId):
         """
+        **add_edge**
+        ------------
 
-        Create an edge between two nodes.
+        > Create an edge between two nodes.
 
         Parameters
         ----------
@@ -32,6 +37,7 @@ class BaseGraph:
             A node id of the first node.
         node2 : nodeId
             A node id of the second node.
+        
         """
         if node1 not in self.edges:
             self.edges[node1] = []
@@ -41,8 +47,10 @@ class BaseGraph:
     @property
     def get_nodes(self) -> list:
         """
+        **get_nodes**
+        -------------
 
-        Get all nodes of the graph.
+        > Get all nodes of the graph.
 
         Returns
         -------
@@ -54,8 +62,10 @@ class BaseGraph:
     @property
     def get_average_degree(self):
         """
+        **get_average_degree**
+        ----------------------
 
-        Get the average degree of the graph.
+        > Get the average degree of the graph.
 
         Returns
         -------
@@ -67,8 +77,10 @@ class BaseGraph:
     @if_node_not_exist
     def get_neighbors_size(self, node: nodeId) -> int:
         """
+        **get_neighbors_size**
+        ----------------------
 
-        Get the size of a node.
+        > Get the size of a node.
 
         Parameters
         ----------
@@ -85,8 +97,10 @@ class BaseGraph:
 
     def get_neighbors(self, node: nodeId) -> list:
         """
+        **get_neighbors**
+        -----------------
 
-        Get all neighbors of a node.
+        > Get all neighbors of a node.
 
         Parameters
         ----------

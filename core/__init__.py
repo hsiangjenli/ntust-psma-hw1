@@ -1,5 +1,6 @@
 """
 .. include:: ../README.md
+.. include:: ../REPORT.md
 """
 from .base import *
 from .graph import Graph
